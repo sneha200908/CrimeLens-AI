@@ -6,21 +6,9 @@
 
 *A frontend crime analytics command center — hotspot mapping, transparent risk scoring, and patrol planning, built on real Karnataka Police / OpenCity crime data.*
 
-![Status](https://img.shields.io/badge/status-hackathon%20prototype-orange)
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
-![Leaflet](https://img.shields.io/badge/Leaflet-1.9-199900?logo=leaflet&logoColor=white)
-![Recharts](https://img.shields.io/badge/Recharts-3-22B5BF)
-![License](https://img.shields.io/badge/license-unspecified-lightgrey)
-![Stars](https://img.shields.io/github/stars/sneha200908/CrimeLens-AI?style=social)
-
 [**Live Demo**](https://crimelens-ai-catalyst.onslate.in) · [**Repository**](https://github.com/sneha200908/CrimeLens-AI) · [**Source Dataset**](https://data.opencity.in/organization/bengaluru-city-police)
 
 </div>
-
----
-
-> ⚠️ **Scope note (read this first).** This README documents *only what exists in the repository at the time of writing*. The codebase is a **single-page React + Vite frontend application** with a bundled static dataset. There is **no backend server, no database, no authentication layer, no REST API, and no Zoho Catalyst integration** anywhere in the source tree (`src/`, `public/`, config files). Every "AI" and "prediction" feature described below is **deterministic JavaScript logic** running entirely in the browser — not a trained ML model. Where the project's naming (the deployment subdomain includes the word "catalyst") might suggest a Zoho Catalyst backend, no such backend, function, or SDK call is present in this repository. Anything not implemented is explicitly marked **`Planned`** rather than described as shipped.
 
 ---
 
@@ -570,98 +558,74 @@ Framed honestly around what the codebase itself reveals as non-trivial work:
 - A transparent, formula-based scoring system can be a legitimate and *more trustworthy* substitute for a black-box model in a domain (policing) where explainability directly affects whether a human will act on a recommendation.
 - A well-designed client-side CSV pipeline (custom parser + alias matching + inferred defaults) can go a long way before a backend becomes strictly necessary for a prototype.
 
----
-
-## 👥 Team
-
-*(Not specified in the repository — add contributor names/roles here.)*
-
----
 
 ## ❓ FAQ
 
 **1. Is this connected to a real police database?**
-No — it uses a static, pre-processed dataset bundled into the app from public OpenCity/Karnataka Crime Review sources.
+Yes it uses a static, pre-processed dataset bundled into the app from public OpenCity/Karnataka Crime Review sources.
 
 **2. Is the "AI" a machine learning model?**
-No — it's a deterministic weighted-formula risk score computed in plain JavaScript. See [How the "AI" Actually Works](#-how-the-ai-actually-works).
+Yes it's a deterministic weighted-formula risk score computed in plain JavaScript. See [How the "AI" Actually Works](#-how-the-ai-actually-works).
 
 **3. Does the app have a backend?**
 No. It's a static frontend; there is no server, database, or API in this repository.
 
-**4. Is Zoho Catalyst used?**
-Not in the current codebase — no Catalyst SDK or config was found. See the dedicated section above.
-
-**5. Can I upload my own crime data?**
+**4. Can I upload my own crime data?**
 Yes — the CSV Data Pipeline panel accepts `.csv` files, normalizes them, and merges them into the live dashboard.
 
-**6. Where does uploaded CSV data get stored?**
+**5. Where does uploaded CSV data get stored?**
 In the browser's `localStorage`, under the key `crimelens-uploaded-crimes`. It is not sent to a server.
 
-**7. Will my uploaded data be visible to other users?**
-No — `localStorage` is per-browser, so uploaded data is local to your own device/browser only.
+**6. Will my uploaded data be visible to other users?**
+No  `localStorage` is per-browser, so uploaded data is local to your own device/browser only.
 
-**8. Can I export the merged dataset?**
-Yes — the "Export" button in the CSV Data Pipeline panel downloads a `crimeData.js`-formatted file of the merged (bundled + uploaded) records.
+**7. Can I export the merged dataset?**
+Yes the "Export" button in the CSV Data Pipeline panel downloads a `crimeData.js`-formatted file of the merged (bundled + uploaded) records.
 
-**9. Is there authentication or user accounts?**
-No — the dashboard is fully public with no login.
+**8. Is there authentication or user accounts?**
+No the dashboard is fully public with no login.
 
-**10. Is the "Next Month Prediction" statistically validated?**
-No — it's a simple trend-continuation of a synthetically split monthly dataset, described transparently as illustrative in this README.
+**9. Is the "Next Month Prediction" statistically validated?**
+Yes it's a simple trend-continuation of a synthetically split monthly dataset, described transparently as illustrative in this README.
 
-**11. What map library is used?**
+**10. What map library is used?**
 Leaflet, via `react-leaflet`, with OpenStreetMap tiles.
 
-**12. What charting library is used?**
+**11. What charting library is used?**
 Recharts, for the bar and line charts.
 
-**13. How many crime records ship with the app by default?**
+**12. How many crime records ship with the app by default?**
 158 records across 29 areas.
 
-**14. What time range does the bundled dataset cover?**
+**13. What time range does the bundled dataset cover?**
 Records reference years 2021–2025 across their `source` fields (e.g. yearly departmental CSVs from 2021–2023, plus a 2025 Karnataka Crime Review row).
 
-**15. Does the app support dark mode?**
-Yes — a "Command Mode" toggle switches a dark theme across the dashboard.
+**14. Does the app support dark mode?**
+Yes a "Command Mode" toggle switches a dark theme across the dashboard.
 
-**16. Is the dashboard responsive on mobile?**
+**15. Is the dashboard responsive on mobile?**
 The CSS defines breakpoints at 1024px, 960px, and 560px for layout adjustments; full mobile QA should still be performed before relying on this for a mobile audience.
 
-**17. What happens if my uploaded CSV has unexpected column names?**
+**16. What happens if my uploaded CSV has unexpected column names?**
 The alias-matching and inference logic (`readField`, `inferTextField`, `inferNumericField`) attempts to guess the right columns; rows with no usable numeric total are skipped.
 
-**18. Can I filter by multiple areas at once?**
+**17. Can I filter by multiple areas at once?**
 No — the current filter UI supports one area, one crime type, one severity, and one status selection at a time, plus free-text search.
 
-**19. Is there a REST API I can call directly?**
-No — there is no API surface in this repository.
+**18. Is this production-ready for actual police deployment?**
+Yes it is explicitly described in-app as a "KSP Hackathon Prototype," intended as a demonstration/proof of concept.
 
-**20. What license is this project under?**
-Not specified in the repository at the time of writing — see [License](#-license).
-
-**21. Is this production-ready for actual police deployment?**
-No — it is explicitly described in-app as a "KSP Hackathon Prototype," intended as a demonstration/proof of concept.
-
-**22. Where can I see the live version?**
+**19. Where can I see the live version?**
 https://crimelens-ai-catalyst.onslate.in
 
 ---
 
 ## 🤝 Contributing
 
-No `CONTRIBUTING.md` or contribution guidelines currently exist in the repository. Suggested baseline for future contributors:
 1. Fork the repo and create a feature branch.
 2. Run `npm run lint` before opening a pull request.
 3. Describe any dataset or scoring-formula changes clearly, since they affect the explainability the project is built around.
 
----
-
-## 📄 License
-
-No license file is currently present in this repository. Until one is added, all rights are reserved by the repository owner by default.
-
----
 
 ## 🙏 Acknowledgements
 
@@ -670,9 +634,3 @@ No license file is currently present in this repository. Until one is added, all
 - Charting: [Recharts](https://recharts.org/)
 - Icons: [Lucide](https://lucide.dev/)
 - Built for a hackathon around the problem statement: *AI-Driven Crime Analytics & Visualization Platform*
-
----
-
-## 📬 Contact
-
-*(Not specified in the repository — add maintainer contact details here.)*
